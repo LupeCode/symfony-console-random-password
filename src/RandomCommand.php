@@ -18,6 +18,7 @@ class RandomCommand extends Command
              ->addArgument('Password Length', InputArgument::REQUIRED, 'The length of the resulting password')
              ->addArgument('Character Set', InputArgument::OPTIONAL, 'The set of characters to use')
              ->addOption('u', null, InputOption::VALUE_NONE, 'Use untypable characters')
+             ->addOption('e', null, InputOption::VALUE_NONE, 'Use emoji characters')
         ;
     }
 
@@ -28,6 +29,8 @@ class RandomCommand extends Command
             $pwd = $RP::generateRandomPassword($input->getArgument('Password Length'), $input->getArgument('Character Set'));
         } elseif ($input->getOption('u')) {
             $pwd = $RP::generateRandomPasswordUntypable($input->getArgument('Password Length'));
+        }elseif($input->getOption('e')){
+            $pwd = $RP::generateRandomPasswordEmoji($input->getArgument('Password Length'));
         } else {
             $pwd = $RP::generateRandomPassword($input->getArgument('Password Length'));
         }
