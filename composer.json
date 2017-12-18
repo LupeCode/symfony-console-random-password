@@ -1,7 +1,6 @@
 {
     "require": {
-        "symfony/console": "~3.3",
-        "juanparati/emoji": "*@dev"
+        "symfony/console": "~3.3"
     },
     "autoload": {
         "psr-4": {
