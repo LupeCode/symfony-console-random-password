@@ -2,8 +2,6 @@
 
 namespace RndPwd;
 
-use Juanparati\Emoji\Emoji;
-
 class RandomPassword
 {
 
