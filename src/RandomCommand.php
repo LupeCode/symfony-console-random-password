@@ -15,13 +15,18 @@ class RandomCommand extends Command
         $this->setName("gen")
              ->setDescription("Generates a randomized password")
              ->addArgument('Password Length', InputArgument::REQUIRED, 'The length of the resulting password')
+             ->addArgument('Character Set', InputArgument::OPTIONAL, 'The set of characters to use')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $RP  = new RandomPassword();
-        $pwd = $RP::generateRandomPassword($input->getArgument('Password Length'));
+        if ($input->getArgument('Character Set')) {
+            $pwd = $RP::generateRandomPassword($input->getArgument('Password Length'), $input->getArgument('Character Set'));
+        } else {
+            $pwd = $RP::generateRandomPassword($input->getArgument('Password Length'));
+        }
         $output->writeln($pwd);
     }
 }
