@@ -2,8 +2,6 @@
 
 namespace RndPwd;
 
-use Juanparati\Emoji\Emoji;
-
 class RandomPassword
 {
 
@@ -19,6 +17,13 @@ class RandomPassword
         }
 
         return $password;
+    }
+
+    public static function generateRandomPasswordUntypable(int $length = 12)
+    {
+        $pool = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ■²ⁿ√·∙°≈÷⌡⌠≤≥±≡∩εφ∞δΩΘΦτµσΣπΓßα▀▐▌▄█┌┘╪╫╓╒╘╙╥╤╨←╬═╠╦╩╔╚╟╞┼─├┬┴└┐╛╜╝╗║╣╕╖╢╡┤│▓▒░»«¡¼½¬⌐¿ºªÑñúóíáƒ₧¥£¢ÜÖÿùûòöôÆæÉÅÄìîïèëêçåàäâéüÇ⌂';
+
+        return static::generateRandomPassword($length, $pool);
     }
 
 }
