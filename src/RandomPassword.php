@@ -7,9 +7,14 @@ use Juanparati\Emoji\Emoji;
 class RandomPassword
 {
 
-    public static function generateRandomPassword(int $length = 12, $pool = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~')
+    public static function generateRandomPassword(int $length = 12, $pool = '')
     {
-        if (is_string($pool)) {
+        if (empty($pool)) {
+            $pool = [];
+            for ($iterator = 0x20; $iterator < 0x7F; $iterator++) {
+                $pool[] = chr($iterator);
+            }
+        } elseif (is_string($pool)) {
             $pool = \str_split($pool);
         }
         $password   = '';
@@ -23,18 +28,27 @@ class RandomPassword
 
     public static function generateRandomPasswordUntypable(int $length = 12)
     {
-        $pool = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ■²ⁿ√·∙°≈÷⌡⌠≤≥±≡∩εφ∞δΩΘΦτµσΣπΓßα▀▐▌▄█┌┘╪╫╓╒╘╙╥╤╨←╬═╠╦╩╔╚╟╞┼─├┬┴└┐╛╜╝╗║╣╕╖╢╡┤│▓▒░»«¡¼½¬⌐¿ºªÑñúóíáƒ₧¥£¢ÜÖÿùûòöôÆæÉÅÄìîïèëêçåàäâéüÇ⌂';
+        $pool = [];
+        for ($iterator = 0x20; $iterator < 0x7F; $iterator++) {
+            $pool[] = chr($iterator);
+        }
+        for ($iterator = 0xA0; $iterator < 0xFF; $iterator++) {
+            $pool[] = Emoji::char($iterator);
+        }
+        var_dump($pool);
 
         return static::generateRandomPassword($length, $pool);
     }
 
     public static function generateRandomPasswordEmoji(int $length = 12)
     {
-        $pool = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
-        $pool = \str_split($pool);
+        $pool = [];
+        for ($iterator = 0x20; $iterator < 0x7F; $iterator++) {
+            $pool[] = chr($iterator);
+        }
 
         foreach (self::$dictionary as $k => $hex) {
-            $pool[] = Emoji::char($k) . '';
+            $pool[] = Emoji::char($k);
         }
 
         return static::generateRandomPassword($length, $pool);
