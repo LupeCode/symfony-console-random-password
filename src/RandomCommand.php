@@ -19,6 +19,7 @@ class RandomCommand extends Command
              ->addArgument('Character Set', InputArgument::OPTIONAL, 'The set of characters to use')
              ->addOption('u', null, InputOption::VALUE_NONE, 'Use untypable characters')
              ->addOption('e', null, InputOption::VALUE_NONE, 'Use emoji characters')
+             ->addOption('o', null, InputOption::VALUE_REQUIRED, 'The output file')
         ;
     }
 
@@ -29,11 +30,15 @@ class RandomCommand extends Command
             $pwd = $RP::generateRandomPassword($input->getArgument('Password Length'), $input->getArgument('Character Set'));
         } elseif ($input->getOption('u')) {
             $pwd = $RP::generateRandomPasswordUntypable($input->getArgument('Password Length'));
-        }elseif($input->getOption('e')){
+        } elseif ($input->getOption('e')) {
             $pwd = $RP::generateRandomPasswordEmoji($input->getArgument('Password Length'));
         } else {
             $pwd = $RP::generateRandomPassword($input->getArgument('Password Length'));
         }
         $output->writeln($pwd);
+        if ($outputFile = $input->getOption('o')) {
+            \file_put_contents($outputFile, $pwd);
+            $output->writeln("Password saved to '" . \realpath($outputFile) . "'");
+        }
     }
 }
